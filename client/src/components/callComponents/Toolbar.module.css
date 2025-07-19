@@ -1,0 +1,14 @@
+.toolbarContainer{
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    /* padding: 0.5rem; */
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.toolbarContainer_dragHandle{
+    background-color: #25D366;
+    height: 100%;
+    
+}
