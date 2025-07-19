@@ -8,9 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Ignore node_modules & dist for both frontend and backend
-client/node_modules/
+client/node_modules
 client/dist/
-server/node_modules/
+server/node_modules
 server/dist/
 
 
