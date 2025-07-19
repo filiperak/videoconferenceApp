@@ -7,7 +7,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Ignore node_modules & dist for both frontend and backend
+client/node_modules/
+client/dist/
+server/node_modules/
+server/dist/
+
+
 dist
 dist-ssr
 *.local
