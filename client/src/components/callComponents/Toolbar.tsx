@@ -3,7 +3,7 @@ import Style from './Toolbar.module.css'
 import { RxDragHandleDots2 } from "react-icons/rx";
 
 interface ToolbarProps{
-    containerRef: React.RefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const Toolbar:React.FC<ToolbarProps> = ({containerRef}) => {
@@ -22,6 +22,20 @@ const Toolbar:React.FC<ToolbarProps> = ({containerRef}) => {
 
     const box = boxRef.current;
     const container = containerRef.current;
+
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const boxWidth = box.offsetWidth;
+    const boxHeight = box.offsetHeight;
+
+    const initialX = (containerWidth / 2) - (boxWidth / 2);
+    const initialY = containerHeight - boxHeight - 4;
+
+    box.style.left = `${initialX}px`;
+    box.style.top = `${initialY}px`;
+
+    coords.current.lastX = initialX;
+    coords.current.lastY = initialY;
 
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
