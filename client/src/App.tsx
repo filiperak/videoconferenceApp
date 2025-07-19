@@ -1,9 +1,16 @@
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Call from "./components/callComponents/Call";
 
 function App() {
 
   return (
     <>
-  <button>click me</button>
+      <Router>
+        <Routes>
+        
+        <Route path="/call" element={<Call/>}/>
+        </Routes>
+      </Router>
     </>
   )
 }
