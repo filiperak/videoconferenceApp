@@ -6,9 +6,45 @@
     align-items:center;
     justify-content: space-between;
     overflow: hidden;
+    /* margin: 0 auto; */
+    position: absolute;
+    /* bottom: 1%;
+    left: 50%;
+    transform: translateX(-50%); */
+    top: 0;
+    left: 0;
 }
 .toolbarContainer_dragHandle{
     background-color: #25D366;
     height: 100%;
-    padding: 0.5em 0;
+    padding: 1rem 0;
+    cursor:grab
+}
+
+@media (max-width: 480px) {
+  .toolbarContainer {
+    background-color: red;
+    width: 90%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .toolbarContainer {
+    background-color: rgb(34, 19, 235);
+    width: 75%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .toolbarContainer {
+    background-color: rgb(255, 165, 0); 
+    width: 65%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .toolbarContainer {
+    background-color: rgb(180, 183, 34);
+    width: 50%;
+  }
 }

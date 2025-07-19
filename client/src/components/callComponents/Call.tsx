@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Styles from './Call.module.css'
 import Toolbar from './Toolbar'
 
 const Call = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
   return (
-    <div className={`${Styles.callContainer} app-container_content`}>
+    <div ref={containerRef} className={`${Styles.callContainer} app-container_content`}>
       Call
-      <Toolbar/>
+      <Toolbar containerRef={containerRef}/>
     </div>
   )
 }
