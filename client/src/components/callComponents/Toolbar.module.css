@@ -13,38 +13,78 @@
     transform: translateX(-50%); */
     /* top: 0;
     left: 0; */
-}
+  height: 3.5rem;
+  }
 .toolbarContainer_dragHandle{
     background-color: #25D366;
     height: 100%;
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     cursor:grab
+
+}
+.toolbarContainer > *{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.toolbarContainer_btn{
+  cursor: pointer;
+  height: 100%;
+  padding: 0 1em;
+   /* display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; */
+}
+.toolbarContainer_btn:hover{
+  background-color: #242424;
+}
+.toolbarContainer_btn p{
+  margin: 0;
+  font-size: 0.7rem;
+}
+.toolbarContainer_btn_endcall{
+  background-color: red;
 }
 
 @media (max-width: 480px) {
   .toolbarContainer {
-    background-color: red;
+    /* background-color: red; */
     width: 90%;
   }
+  .toolbarContainer_btn p{
+    display:none;
+  }
+  .toolbarContainer_btn{
+    padding: 0 0.5rem;
+  }
+
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
   .toolbarContainer {
-    background-color: rgb(34, 19, 235);
     width: 75%;
+  }
+  .toolbarContainer_btn p{
+    /* display:none; */
+  }
+  .toolbarContainer_btn{
+    padding: 0 0.5rem;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .toolbarContainer {
-    background-color: rgb(255, 165, 0); 
+    /* background-color: rgb(255, 165, 0);  */
     width: 65%;
   }
 }
 
 @media (min-width: 1025px) {
   .toolbarContainer {
-    background-color: rgb(180, 183, 34);
+    /* background-color: rgb(180, 183, 34); */
     width: 50%;
   }
 }
