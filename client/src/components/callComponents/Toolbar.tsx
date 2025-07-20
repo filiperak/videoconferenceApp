@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Style from './Toolbar.module.css'
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { MdCropRotate } from "react-icons/md";
@@ -16,10 +16,30 @@ interface ToolbarProps{
     containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const Toolbar:React.FC<ToolbarProps> = ({containerRef}) => {
+interface iconState{
+    camera:boolean,
+    mic:boolean,
+    hand:boolean,
+}
 
+const Toolbar:React.FC<ToolbarProps> = ({containerRef}) => {
+  const [isVertical,setIsVertical] = useState<boolean>(false);
+  const [windowSize,setWindowSize] = useState<number>(window.innerWidth)
    const boxRef = useRef<HTMLDivElement>(null);
   const isClicked = useRef(false);
+  const [iconState,setIconState] = useState<any>({
+    camera:true,
+    mic:true,
+    hand:false
+  }) 
+
+const handleIconState = (id: keyof iconState) => {
+  setIconState((prev: iconState) => ({
+    ...prev,
+    [id]: !prev[id]
+  }));
+};
+
   const coords = useRef({
     startX: 0,
     startY: 0,
@@ -27,20 +47,27 @@ const Toolbar:React.FC<ToolbarProps> = ({containerRef}) => {
     lastY: 0,
   });
 
-  //drag feat+
+  //drag feat
+
   useEffect(() => {
     if (!boxRef.current || !containerRef.current) return;
 
     const box = boxRef.current;
     const container = containerRef.current;
+    const dragHandle = box.querySelector(".dragHandle") as HTMLDivElement
 
     const containerWidth = container.clientWidth;
     const containerHeight = container.clientHeight;
     const boxWidth = box.offsetWidth;
     const boxHeight = box.offsetHeight;
 
-    const initialX = (containerWidth / 2) - (boxWidth / 2);
-    const initialY = containerHeight - boxHeight - 4;
+    let initialX = (containerWidth / 2) - (boxWidth / 2);
+    let initialY = containerHeight - boxHeight - 4;
+
+    if(isVertical){
+        initialX = 2
+        initialY = (containerHeight/2) -(boxHeight/2) -4
+    }
 
     box.style.left = `${initialX}px`;
     box.style.top = `${initialY}px`;
@@ -68,50 +95,60 @@ const Toolbar:React.FC<ToolbarProps> = ({containerRef}) => {
       box.style.top = `${nextY}px`;
     };
 
-    box.addEventListener('mousedown', onMouseDown);
+    // box.addEventListener('mousedown', onMouseDown);
+    dragHandle?.addEventListener('mousedown', onMouseDown);
     box.addEventListener('mouseup', onMouseUp);
     container.addEventListener('mousemove', onMouseMove);
     container.addEventListener('mouseleave', onMouseUp);
 
     return () => {
-      box.removeEventListener('mousedown', onMouseDown);
+    //   box.removeEventListener('mousedown', onMouseDown);
+      dragHandle?.removeEventListener('mousedown', onMouseDown);
       box.removeEventListener('mouseup', onMouseUp);
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('mouseleave', onMouseUp);
     };
-  }, [containerRef]);
+  }, [containerRef,isVertical,windowSize]);
+
+  useEffect(() => {
+  const handleResize = () => setWindowSize(window.innerWidth);
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
   
   const handleRotateToolbar = () => {
-    
+    setIsVertical(!isVertical)
   }
+//   Style.toolbarContainer_vertical
   return (
-    <section className={Style.toolbarContainer} ref={boxRef}>
-        <div className={Style.toolbarContainer_dragHandle}>
+    <section className={isVertical? Style.toolbarContainer_vertical:Style.toolbarContainer} ref={boxRef}>
+        <div className={`${Style.toolbarContainer_dragHandle} dragHandle`}>
+        {/* <div className={Style.toolbarContainer_dragHandle}> */}
             <RxDragHandleDots2/>
         </div>
-        <div className={Style.toolbarContainer_btn}>
-            <MdCropRotate size={24} onClick={handleRotateToolbar}/>
+        <div className={Style.toolbarContainer_btn} onClick={handleRotateToolbar}>
+            <MdCropRotate size={24} />
             <p>rotate</p>
         </div>
-        <div className={Style.toolbarContainer_btn}>
-            <BsCameraVideo size={24}/>
+        <div className={Style.toolbarContainer_btn} onClick={() => handleIconState("camera")}>
+            {!iconState.camera?  <BsCameraVideoOff size={24}/> : <BsCameraVideo size={24}/>}
             <p>camera</p>
         </div>
-        <div className={Style.toolbarContainer_btn}>
-            <IoIosMicOff size={24}/>
+        <div className={Style.toolbarContainer_btn} onClick={() => handleIconState("mic")}>
+            {!iconState.mic? <IoIosMicOff size={24}/> : <IoIosMic size={24}/>}
             <p>mic</p>
         </div>
         <div className={Style.toolbarContainer_btn}>
             <IoChatboxOutline size={24}/>
             <p>chat</p>
         </div>
-        <div className={Style.toolbarContainer_btn}>
-            <FaHandPaper size={24}/>
+        <div className={Style.toolbarContainer_btn} onClick={() => handleIconState("hand")}>
+            <FaHandPaper size={24} color={iconState.hand && "yellow"}/>
             <p>raise hand</p>
         </div>
         <div className={Style.toolbarContainer_btn}>
             <SlPeople size={24}/>
-            <p>participants</p>
+            <p>people</p>
         </div>
         <div className={`${Style.toolbarContainer_btn} ${Style.toolbarContainer_btn_endcall}`}>
             <MdCallEnd size={24}/>

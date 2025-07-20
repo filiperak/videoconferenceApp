@@ -1,19 +1,23 @@
 .toolbarContainer{
     background-color: #1a1a1a;
     border-radius: 4px;
-    /* padding: 0.5rem; */
     display: flex;
     align-items:center;
     justify-content: space-between;
     overflow: hidden;
-    /* margin: 0 auto; */
     position: absolute;
-    /* bottom: 1%;
-    left: 50%;
-    transform: translateX(-50%); */
-    /* top: 0;
-    left: 0; */
   height: 3.5rem;
+  }
+.toolbarContainer_vertical{
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    text-align: center;
+    overflow: hidden;
+    position: absolute;
+    width: 4.5rem;
+    /* left: 1%;
+    top: 50%;
+  transform: translateY(-50%); */
   }
 .toolbarContainer_dragHandle{
     background-color: #25D366;
@@ -44,6 +48,7 @@
 .toolbarContainer_btn p{
   margin: 0;
   font-size: 0.7rem;
+  user-select: none;
 }
 .toolbarContainer_btn_endcall{
   background-color: red;
